@@ -1,3 +1,5 @@
+import 'package:attendance/app/data/models/location_model.dart';
+
 class User {
   int? id;
   String? username;
@@ -48,6 +50,7 @@ class UserDetails {
   String? createdAt;
   String? updatedAt;
   String? address;
+  Location? location;
 
   UserDetails(
       {this.id,
@@ -68,6 +71,8 @@ class UserDetails {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     address = json['address'];
+    location =
+        json['location'] != null ? Location?.fromJson(json['location']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -80,6 +85,9 @@ class UserDetails {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     data['address'] = address;
+    if (location != null) {
+      data['location'] = location?.toJson();
+    }
     return data;
   }
 }

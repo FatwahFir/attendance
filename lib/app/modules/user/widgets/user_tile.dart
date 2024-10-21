@@ -1,4 +1,7 @@
+import 'package:attendance/app/data/models/location_model.dart';
 import 'package:attendance/app/data/models/user_model.dart';
+import 'package:attendance/app/data/providers/location_provider.dart';
+import 'package:attendance/app/modules/user/controllers/user_controller.dart';
 import 'package:attendance/app/shared/components/common_button.dart';
 import 'package:attendance/app/theme/default_theme.dart';
 import 'package:attendance/app/utils/consts/text_const.dart';
@@ -17,6 +20,8 @@ class UserTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<UserController>();
+    Location selectedLocation = Location();
     return Container(
       height: 70,
       width: Get.width,
@@ -48,7 +53,7 @@ class UserTile extends StatelessWidget {
             const SizedBox(
               width: 3,
             ),
-            Text(user.userDetails?.locationId ?? '-'),
+            Text(user.userDetails?.location?.name ?? '-'),
           ],
         ),
         trailing: IconButton(
@@ -60,74 +65,115 @@ class UserTile extends StatelessWidget {
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
               title: "Change Location",
-              content: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  DropdownSearch<String>(
-                    items: (filter, infiniteScrollProps) =>
-                        ["Menu", "Dialog", "Modal", "BottomSheet"],
-                    decoratorProps: DropDownDecoratorProps(
-                      decoration: InputDecoration(
-                        hintStyle: TextStyle(
-                            fontWeight: FontWeight.normal, fontSize: 14),
-                        contentPadding: const EdgeInsets.all(15),
-                        hintText: "Pilih Lokasi",
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(
-                            color: DefaultTheme.darkColor,
+              content: Form(
+                key: controller.formkey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    DropdownSearch<Location>(
+                      itemAsString: (item) => item.name!,
+                      asyncItems: (_) async {
+                        Get.lazyPut<LocationProvider>(() => LocationProvider());
+
+                        // var response = await Dio().get("$host/api/locations");
+                        // var models = MyUtils.fromJsonList<Location>(
+                        //     response.data['data'], Location.fromJson);
+                        return await Get.find<LocationProvider>()
+                            .getLocations();
+                      },
+                      validator: (value) {
+                        if (value == null) {
+                          return "Kolom ini wajib di isi";
+                        }
+                        return null;
+                      },
+                      compareFn: (item, sItem) => item.id == sItem.id,
+                      popupProps: PopupProps.menu(
+                        fit: FlexFit.loose,
+                        constraints: BoxConstraints(),
+                        itemBuilder: (context, item, isSelected) => ListTile(
+                          tileColor: Colors.white,
+                          selected: isSelected,
+                          selectedTileColor: DefaultTheme.primaryColor,
+                          title: Text(
+                            item.name!,
+                            style: TextStyle(
+                                color: isSelected
+                                    ? DefaultTheme.primaryColor
+                                    : Colors.black),
                           ),
                         ),
-                        focusColor: DefaultTheme.darkColor,
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(
-                            color: DefaultTheme.grayColor,
+                      ),
+                      onChanged: (value) {
+                        if (value != null) {
+                          selectedLocation = value;
+                        }
+                      },
+                      selectedItem: user.userDetails?.location,
+                      dropdownDecoratorProps: DropDownDecoratorProps(
+                        dropdownSearchDecoration: InputDecoration(
+                          hintStyle: TextStyle(
+                              fontWeight: FontWeight.normal, fontSize: 14),
+                          contentPadding: const EdgeInsets.all(15),
+                          hintText: "Pilih Lokasi",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: DefaultTheme.darkColor,
+                            ),
+                          ),
+                          focusColor: DefaultTheme.darkColor,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: DefaultTheme.grayColor,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                    popupProps: PopupProps.menu(
-                      fit: FlexFit.loose,
-                      constraints: BoxConstraints(),
-                      showSelectedItems: false,
+                    SizedBox(
+                      height: 20,
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: CommonButton(
-                          onPressed: () {
-                            Get.back();
-                          },
-                          backgroundColor: DefaultTheme.red80,
-                          child: Text(
-                            TextConst.cancelText,
-                            style: Get.textTheme.labelMedium!
-                                .copyWith(color: DefaultTheme.light100),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: CommonButton(
+                            onPressed: () {
+                              Get.back();
+                            },
+                            backgroundColor: DefaultTheme.red80,
+                            child: Text(
+                              TextConst.cancelText,
+                              style: Get.textTheme.labelMedium!
+                                  .copyWith(color: DefaultTheme.light100),
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Expanded(
-                        child: CommonButton(
-                          backgroundColor: DefaultTheme.blue80,
-                          child: const Text(TextConst.saveText),
-                          onPressed: () {
-                            Get.back();
-                          },
+                        const SizedBox(
+                          width: 5,
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        Expanded(
+                          child: CommonButton(
+                            backgroundColor: DefaultTheme.blue80,
+                            child: const Text(TextConst.saveText),
+                            onPressed: () {
+                              if (controller.formkey.currentState!.validate()) {
+                                Get.back();
+                                controller.saveLocation(
+                                  user.id!,
+                                  selectedLocation.id!,
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             );
           },
