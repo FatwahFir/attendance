@@ -22,10 +22,12 @@ class AttendanceController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    isLoading(true);
     await checkAttendanceStatus().then(
       (_) => attendanceStatus.value = Box.attendanceStatus!,
     );
     await initialize();
+    isLoading(false);
   }
 
   double getDistance() {
@@ -61,26 +63,33 @@ class AttendanceController extends GetxController {
 
   Future<void> submitAttendance() async {
     try {
+      isLoading(true);
+      String type = attendanceStatus.value == 'open' ? 'in' : 'out';
       var data = {
         'user_id': user!.id,
         'lat': position.value.latitude,
         'long': position.value.longitude,
-        'type': 'in',
+        'type': type,
       };
 
       var res = await _provider.submitAttendance(data);
       if (res.statusCode == HttpStatus.ok) {
-        Box.setAttendanceStatus('in');
+        Box.setAttendanceStatus(type);
+        attendanceStatus.value = type;
         CustomSnackBar.success(successList: [res.body['message']]);
       } else if (res.statusCode == HttpStatus.badRequest) {
         if (res.body['status'] == 'already-in') {
           Box.setAttendanceStatus('in');
+          attendanceStatus.value = 'in';
         } else if (res.body['status'] == 'already-out') {
           Box.setAttendanceStatus('out');
+          attendanceStatus.value = 'out';
         }
       }
     } catch (e) {
       MyUtils.exceptionHandler(e);
+    } finally {
+      isLoading(false);
     }
   }
 

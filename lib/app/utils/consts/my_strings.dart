@@ -12,8 +12,12 @@ class MyStrings {
 
   static const String changeLocation = 'Change User Location';
   static const String addLocation = 'Add Location';
+  static const String locationWarningTitle = 'Location Warning';
+  static const String locationWarningMsg =
+      'You are outside the allowed radius for attendance. Please enter the designated area to proceed.';
 
   static const String save = 'save';
+  static const String ok = 'Ok';
 
   static const String isRequired = 'is required';
   static const String unableToAccessYourLocation =
