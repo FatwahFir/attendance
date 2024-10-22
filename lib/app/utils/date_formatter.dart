@@ -45,6 +45,15 @@ class DateFormatter {
     return format.format(timeWithSec);
   }
 
+  static String timeWithoutSecISO(String time, {String? locale}) {
+    initializeDateFormatting(locale ?? 'en');
+
+    final dateTime = DateTime.parse(time);
+    final format = DateFormat('HH:mm', locale);
+
+    return format.format(dateTime);
+  }
+
   static String ddMMyyyy(String date, {String? locale}) {
     initializeDateFormatting(locale ?? 'en');
     final format = DateFormat('dd MMMM yyyy', locale);

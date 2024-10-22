@@ -9,6 +9,9 @@ class MyStrings {
 
   static const String users = 'Users';
 
+  static const String todayAttendance = "Today Attendance";
+  static const String noAttendance = "No attendance today";
+
   static const String checkIn = 'Check In';
   static const String checkOut = 'Check Out';
   static const String maxRadius = 'Max Radius (m)';

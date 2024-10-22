@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:attendance/app/data/providers/auttendance_provider.dart';
+import 'package:attendance/app/data/models/attendance_model.dart';
+import 'package:attendance/app/data/providers/attendance_provider.dart';
 import 'package:attendance/app/shared/components/custom_snackbar.dart';
 import 'package:attendance/app/utils/box.dart';
 import 'package:attendance/app/utils/my_utils.dart';
@@ -17,7 +18,8 @@ class AttendanceController extends GetxController {
   var distance = Distance();
   RxDouble distanceM = 0.0.obs;
   RxString attendanceStatus = 'open'.obs;
-  final _provider = Get.find<AuttendanceProvider>();
+  RxList<Attendance> attendances = <Attendance>[].obs;
+  final _provider = Get.find<AttendanceProvider>();
 
   @override
   void onInit() async {
@@ -27,6 +29,7 @@ class AttendanceController extends GetxController {
       (_) => attendanceStatus.value = Box.attendanceStatus!,
     );
     await initialize();
+    await getTodayAttendance();
     isLoading(false);
   }
 
@@ -76,6 +79,7 @@ class AttendanceController extends GetxController {
       if (res.statusCode == HttpStatus.ok) {
         Box.setAttendanceStatus(type);
         attendanceStatus.value = type;
+        getTodayAttendance();
         CustomSnackBar.success(successList: [res.body['message']]);
       } else if (res.statusCode == HttpStatus.badRequest) {
         if (res.body['status'] == 'already-in') {
@@ -105,6 +109,15 @@ class AttendanceController extends GetxController {
           Box.setAttendanceStatus('in');
         }
       }
+    } catch (e) {
+      MyUtils.exceptionHandler(e);
+    }
+  }
+
+  Future<void> getTodayAttendance() async {
+    try {
+      attendances.clear();
+      attendances.addAll(await _provider.getTodayAttendance(user!.id!));
     } catch (e) {
       MyUtils.exceptionHandler(e);
     }

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:attendance/app/data/providers/location_provider.dart';
+import 'package:attendance/app/modules/location/controllers/location_controller.dart';
 import 'package:attendance/app/shared/components/common_text_field.dart';
 import 'package:attendance/app/shared/components/custom_dialog.dart';
 import 'package:attendance/app/shared/components/custom_snackbar.dart';
@@ -91,6 +92,7 @@ class AddLocationController extends GetxController {
       if (res.statusCode == HttpStatus.ok) {
         markers.clear();
         Get.back();
+        Get.find<LocationController>().getLocations();
         CustomSnackBar.success(successList: [res.body['message']]);
       }
     } catch (e) {
