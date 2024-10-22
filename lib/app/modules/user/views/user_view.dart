@@ -1,5 +1,6 @@
 import 'package:attendance/app/modules/user/widgets/user_tile.dart';
 import 'package:attendance/app/shared/components/refresh_widget.dart';
+import 'package:attendance/app/utils/consts/my_strings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -12,7 +13,7 @@ class UserView extends GetView<UserController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Users'),
+        // title: const Text(MyStrings.users),
         centerTitle: true,
       ),
       body: RefreshIndicator(
@@ -30,11 +31,11 @@ class UserView extends GetView<UserController> {
             );
           },
           onEmpty: RefreshWidget(
-            title: "Data Kosong",
+            title: MyStrings.noDataFound,
             onRefresh: () => controller.getUsers(),
           ),
           onError: (_) => RefreshWidget(
-            title: "Terjadi Kesalahan",
+            title: MyStrings.somethingWentWrong,
             onRefresh: () => controller.getUsers(),
           ),
         ),

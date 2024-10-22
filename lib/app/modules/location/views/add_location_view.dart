@@ -1,5 +1,6 @@
 import 'package:attendance/app/modules/location/controllers/add_location_controller.dart';
 import 'package:attendance/app/theme/default_theme.dart';
+import 'package:attendance/app/utils/consts/my_strings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -11,7 +12,7 @@ class AddLocationView extends GetView<AddLocationController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pilih Lokasi'),
+        title: const Text(MyStrings.selectLocation),
         centerTitle: true,
       ),
       body: Obx(

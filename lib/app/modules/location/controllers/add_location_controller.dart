@@ -6,7 +6,6 @@ import 'package:attendance/app/shared/components/common_text_field.dart';
 import 'package:attendance/app/shared/components/custom_dialog.dart';
 import 'package:attendance/app/shared/components/custom_snackbar.dart';
 import 'package:attendance/app/utils/consts/my_strings.dart';
-import 'package:attendance/app/utils/consts/text_const.dart';
 import 'package:attendance/app/utils/my_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -109,11 +108,11 @@ class AddLocationController extends GetxController {
             children: [
               CommonTextField(
                 controller: nameC,
-                labelText: "Name of Location",
-                hintText: "Nama of Location",
+                labelText: MyStrings.locationName,
+                hintText: MyStrings.locationName,
                 validator: (val) {
                   if (val?.isEmpty) {
-                    return TextConst.requiredValidationText;
+                    return MyStrings.requiredMsg;
                   } else {
                     return null;
                   }
@@ -122,7 +121,7 @@ class AddLocationController extends GetxController {
               const SizedBox(
                 height: 10,
               ),
-              Text("Coordinate"),
+              Text(MyStrings.coordinate),
               const SizedBox(
                 height: 5,
               ),

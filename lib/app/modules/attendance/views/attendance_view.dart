@@ -39,7 +39,7 @@ class AttendanceView extends GetView<AttendanceController> {
                     SizedBox(
                       width: 5,
                     ),
-                    Text('Log Out')
+                    Text(MyStrings.logout)
                   ],
                 ),
               ),

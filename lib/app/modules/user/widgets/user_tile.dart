@@ -70,7 +70,7 @@ class UserTile extends StatelessWidget {
                   },
                   validator: (value) {
                     if (value == null) {
-                      return "Kolom ini wajib di isi";
+                      return MyStrings.requiredMsg;
                     }
                     return null;
                   },
@@ -102,7 +102,7 @@ class UserTile extends StatelessWidget {
                       hintStyle: TextStyle(
                           fontWeight: FontWeight.normal, fontSize: 14),
                       contentPadding: const EdgeInsets.all(15),
-                      hintText: "Pilih Lokasi",
+                      hintText: MyStrings.selectLocation,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(

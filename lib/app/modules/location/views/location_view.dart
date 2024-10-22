@@ -1,6 +1,7 @@
 import 'package:attendance/app/routes/app_pages.dart';
 import 'package:attendance/app/shared/components/refresh_widget.dart';
 import 'package:attendance/app/theme/default_theme.dart';
+import 'package:attendance/app/utils/consts/my_strings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -72,11 +73,11 @@ class LocationView extends GetView<LocationController> {
           );
         },
             onEmpty: RefreshWidget(
-              title: "Data Kosong",
+              title: MyStrings.noDataFound,
               onRefresh: () => controller.getLocations(),
             ),
             onError: (_) => RefreshWidget(
-                  title: "Terjadi Kesalahan",
+                  title: MyStrings.somethingWentWrong,
                   onRefresh: () => controller.getLocations(),
                 )),
       ),

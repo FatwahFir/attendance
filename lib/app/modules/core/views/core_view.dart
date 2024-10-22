@@ -1,4 +1,5 @@
 import 'package:attendance/app/theme/default_theme.dart';
+import 'package:attendance/app/utils/consts/my_strings.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -28,7 +29,7 @@ class CoreView extends GetView<CoreController> {
                 Iconsax.home,
                 color: DefaultTheme.primaryColor,
               ),
-              title: Text("Home"),
+              title: Text(MyStrings.home),
               selectedColor: DefaultTheme.primaryColor,
             ),
 
@@ -42,7 +43,7 @@ class CoreView extends GetView<CoreController> {
                 Iconsax.location_add,
                 color: DefaultTheme.primaryColor,
               ),
-              title: Text("Locations"),
+              title: Text(MyStrings.location),
               selectedColor: DefaultTheme.primaryColor,
             ),
 
@@ -56,7 +57,7 @@ class CoreView extends GetView<CoreController> {
                 Iconsax.user_tag,
                 color: DefaultTheme.primaryColor,
               ),
-              title: Text("Users Location"),
+              title: Text(MyStrings.userLocation),
               selectedColor: DefaultTheme.primaryColor,
             ),
           ],

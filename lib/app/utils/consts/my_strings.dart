@@ -7,12 +7,18 @@ class MyStrings {
   static const String reason = 'Reason';
   static const String expiredDate = 'Expired Date';
 
+  static const String users = 'Users';
+
   static const String checkIn = 'Check In';
   static const String checkOut = 'Check Out';
   static const String maxRadius = 'Max Radius (m)';
 
   static const String changeLocation = 'Change User Location';
+  static const String location = 'Location';
   static const String addLocation = 'Add Location';
+  static const String userLocation = 'User Location';
+  static const String locationName = 'Location Name';
+  static const String coordinate = 'Coordinate Point';
   static const String locationWarningTitle = 'Location Warning';
   static const String locationWarningMsg =
       'You are outside the allowed radius for attendance. Please enter the designated area to proceed.';
