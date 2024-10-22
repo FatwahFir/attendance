@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:attendance/app/data/providers/location_provider.dart';
-import 'package:attendance/app/shared/components/common_button.dart';
 import 'package:attendance/app/shared/components/common_text_field.dart';
+import 'package:attendance/app/shared/components/custom_dialog.dart';
 import 'package:attendance/app/shared/components/custom_snackbar.dart';
-import 'package:attendance/app/theme/default_theme.dart';
+import 'package:attendance/app/utils/consts/my_strings.dart';
 import 'package:attendance/app/utils/consts/text_const.dart';
 import 'package:attendance/app/utils/my_utils.dart';
 import 'package:flutter/material.dart';
@@ -100,86 +100,50 @@ class AddLocationController extends GetxController {
   }
 
   Future<dynamic> showDialog() {
-    return Get.defaultDialog(
-      backgroundColor: Colors.white,
-      radius: 5,
-      barrierDismissible: false,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-      title: "Add Location",
-      content: Form(
-        key: formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            CommonTextField(
-              controller: nameC,
-              labelText: "Nama Lokasi",
-              hintText: "Nama Lokasi",
-              validator: (val) {
-                if (val?.isEmpty) {
-                  return TextConst.requiredValidationText;
-                } else {
-                  return null;
-                }
-              },
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text("Titik Koordinat"),
-            const SizedBox(
-              height: 5,
-            ),
-            Row(
-              children: [
-                Text("lat: ${position.value.latitude}"),
-                SizedBox(
-                  width: 20,
-                ),
-                Text("long: ${position.value.longitude}"),
-              ],
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: CommonButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    backgroundColor: DefaultTheme.red80,
-                    child: Text(
-                      TextConst.cancelText,
-                      style: Get.textTheme.labelMedium!
-                          .copyWith(color: DefaultTheme.light100),
-                    ),
+    return CustomDialog.show(
+      child: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CommonTextField(
+                controller: nameC,
+                labelText: "Name of Location",
+                hintText: "Nama of Location",
+                validator: (val) {
+                  if (val?.isEmpty) {
+                    return TextConst.requiredValidationText;
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text("Coordinate"),
+              const SizedBox(
+                height: 5,
+              ),
+              Row(
+                children: [
+                  Text("lat: ${position.value.latitude}"),
+                  SizedBox(
+                    width: 20,
                   ),
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                Expanded(
-                  child: CommonButton(
-                    backgroundColor: DefaultTheme.blue80,
-                    child: const Text(TextConst.saveText),
-                    onPressed: () {
-                      if (formKey.currentState!.validate() &&
-                          taggedPosition != null) {
-                        Get.back();
-                        createLocation();
-                      }
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+                  Text("long: ${position.value.longitude}"),
+                ],
+              ),
+            ],
+          )),
+      title: MyStrings.addLocation,
+      onSubmit: () {
+        if (formKey.currentState!.validate() && taggedPosition != null) {
+          Get.back();
+          createLocation();
+        }
+      },
     );
   }
 }
