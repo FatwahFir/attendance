@@ -1,5 +1,6 @@
 import 'package:attendance/app/modules/auth/controllers/auth_controller.dart';
 import 'package:attendance/app/theme/default_theme.dart';
+import 'package:attendance/app/utils/box.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 
@@ -12,9 +13,10 @@ class AttendanceView extends GetView<AttendanceController> {
   const AttendanceView({super.key});
   @override
   Widget build(BuildContext context) {
+    final user = Box.user;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Niganiga"),
+        title: Text(user?.userDetails?.name ?? '-'),
         actions: [
           PopupMenuButton<String>(
             color: Colors.white,
@@ -22,7 +24,7 @@ class AttendanceView extends GetView<AttendanceController> {
             shadowColor: Colors.grey[200],
             icon: CircleAvatar(
               backgroundColor: Colors.amber,
-              child: Center(child: Text("N")),
+              child: Center(child: Image.asset('assets/images/avatar.png')),
             ),
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
               PopupMenuItem<String>(
@@ -67,25 +69,79 @@ class AttendanceView extends GetView<AttendanceController> {
                       height: 150,
                       width: Get.width * 0.3,
                       color: Colors.grey,
+                      child: Image.asset('assets/images/avatar.png'),
                     ),
                     SizedBox(
                       width: 20,
                     ),
-                    SizedBox(
-                      height: 150,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Fatwah Firmansyah SR"),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text("083821177545"),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text("Desa leuwigeded"),
-                        ],
+                    Expanded(
+                      child: SizedBox(
+                        height: 150,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Flexible(
+                              child: Text(
+                                user?.userDetails?.name ?? '-',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w700, fontSize: 16),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Iconsax.tag_user,
+                                  size: 16,
+                                  color: DefaultTheme.blue40,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(user?.userDetails?.location?.name ?? '-'),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Iconsax.call,
+                                  size: 16,
+                                  color: DefaultTheme.green40,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(user?.userDetails?.phone ?? '-'),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                Icon(
+                                  Iconsax.location,
+                                  size: 16,
+                                  color: DefaultTheme.red40,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Flexible(
+                                    child: Text(
+                                        user?.userDetails?.address ?? '-')),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],

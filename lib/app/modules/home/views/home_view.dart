@@ -1,6 +1,7 @@
 import 'package:attendance/app/modules/auth/controllers/auth_controller.dart';
 import 'package:attendance/app/modules/home/widgets/home_card.dart';
 import 'package:attendance/app/theme/default_theme.dart';
+import 'package:attendance/app/utils/box.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -12,9 +13,10 @@ class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
   @override
   Widget build(BuildContext context) {
+    final user = Box.user;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Niganiga"),
+        title: Text(user?.userDetails?.name ?? '-'),
         actions: [
           PopupMenuButton<String>(
             color: Colors.white,
@@ -22,7 +24,7 @@ class HomeView extends GetView<HomeController> {
             shadowColor: Colors.grey[200],
             icon: CircleAvatar(
               backgroundColor: Colors.amber,
-              child: Center(child: Text("N")),
+              child: Center(child: Image.asset('assets/images/avatar.png')),
             ),
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
               PopupMenuItem<String>(
