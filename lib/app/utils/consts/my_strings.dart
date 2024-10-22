@@ -9,6 +9,7 @@ class MyStrings {
 
   static const String checkIn = 'Check In';
   static const String checkOut = 'Check Out';
+  static const String maxRadius = 'Max Radius (m)';
 
   static const String changeLocation = 'Change User Location';
   static const String addLocation = 'Add Location';
