@@ -1,6 +1,5 @@
 import 'package:attendance/app/modules/auth/controllers/auth_controller.dart';
 import 'package:attendance/app/theme/default_theme.dart';
-import 'package:attendance/app/utils/box.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +12,7 @@ class AttendanceView extends GetView<AttendanceController> {
   const AttendanceView({super.key});
   @override
   Widget build(BuildContext context) {
-    final user = Box.user;
+    final user = controller.user;
     return Scaffold(
       appBar: AppBar(
         title: Text(user?.userDetails?.name ?? '-'),
@@ -133,13 +132,21 @@ class AttendanceView extends GetView<AttendanceController> {
                                   width: 5,
                                 ),
                                 Flexible(
-                                    child: Text(
-                                        user?.userDetails?.address ?? '-')),
+                                  child:
+                                      Text(user?.userDetails?.address ?? '-'),
+                                ),
                               ],
                             ),
                             SizedBox(
                               height: 5,
                             ),
+                            Obx(
+                              () => Text(
+                                "Distance: ${controller.distanceM.value} m",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w600),
+                              ),
+                            )
                           ],
                         ),
                       ),

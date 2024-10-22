@@ -61,23 +61,9 @@ class AddLocationController extends GetxController {
   Future<void> initialize() async {
     try {
       isLoading.toggle();
-      bool serviceEnabled;
-      PermissionStatus permissionGranted;
 
-      serviceEnabled = await _location.serviceEnabled();
-      if (!serviceEnabled) {
-        serviceEnabled = await _location.requestService();
-        if (!serviceEnabled) {
-          return;
-        }
-      }
-
-      permissionGranted = await _location.hasPermission();
-      if (permissionGranted == PermissionStatus.denied) {
-        permissionGranted = await _location.requestPermission();
-        if (permissionGranted != PermissionStatus.granted) {
-          return;
-        }
+      if (!await MyUtils.askLocationPermission(_location)) {
+        return;
       }
 
       await _location.getLocation().then((value) {

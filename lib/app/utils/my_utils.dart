@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:attendance/app/shared/components/custom_snackbar.dart';
 import 'package:attendance/app/utils/consts/my_strings.dart';
+import 'package:location/location.dart';
 
 class MyUtils {
   static List<T> fromJsonList<T>(
@@ -23,5 +24,28 @@ class MyUtils {
     }
     log(error.toString());
     CustomSnackBar.error(errorList: [message]);
+  }
+
+  static Future<bool> askLocationPermission(Location location) async {
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
+
+    serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
+        return false;
+      }
+    }
+
+    permissionGranted = await location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await location.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
+        return false;
+      }
+    }
+
+    return true;
   }
 }
