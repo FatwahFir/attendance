@@ -60,6 +60,7 @@ class AppPages {
         LocationBinding(),
         UserBinding(),
         HomeBinding(),
+        AuthBinding(),
       ],
     ),
   ];

@@ -1,5 +1,6 @@
 class MyStrings {
-  static const String appName = "On-Demand Lab";
+  static const String appName = "Attendance";
+  static const String authText = "Login to Attendance";
   static const String selectALanguage = 'Select Language';
 
   static const String kyc = 'KYC';
@@ -508,6 +509,7 @@ class MyStrings {
 
   static const String attachment = 'Attachment';
   static const String msgFieldEmptyMsg = "Message field can't be empty";
+  static const String requiredMsg = "This field can't be empty";
 
   static const String cartEmptyMsg = "No items in your cart";
 

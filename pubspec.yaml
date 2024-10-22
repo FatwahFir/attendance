@@ -17,6 +17,7 @@ dependencies:
   google_maps_flutter: ^2.9.0
   iconsax: ^0.0.8
   connectivity_plus: 6.1.0
+  get_storage: 2.1.1
   flutter: 
     sdk: flutter
 

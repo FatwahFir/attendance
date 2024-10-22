@@ -1,3 +1,4 @@
+import 'package:attendance/app/modules/auth/controllers/auth_controller.dart';
 import 'package:attendance/app/modules/home/widgets/home_card.dart';
 import 'package:attendance/app/theme/default_theme.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,10 @@ class HomeView extends GetView<HomeController> {
             ),
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
               PopupMenuItem<String>(
+                onTap: () {
+                  Get.lazyPut<AuthController>(() => AuthController());
+                  Get.find<AuthController>().logout();
+                },
                 child: Row(
                   children: [
                     Icon(Iconsax.logout),

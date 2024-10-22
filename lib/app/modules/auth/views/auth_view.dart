@@ -1,6 +1,6 @@
 import 'package:attendance/app/shared/components/common_button.dart';
 import 'package:attendance/app/shared/components/common_text_field.dart';
-import 'package:attendance/app/utils/consts/text_const.dart';
+import 'package:attendance/app/utils/consts/my_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -40,22 +40,20 @@ class AuthView extends GetView<AuthController> {
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Text(
-                              TextConst.authText,
+                              MyStrings.authText,
                               style: Theme.of(context).textTheme.labelLarge,
                             ),
                             const SizedBox(
                               height: 10,
                             ),
                             CommonTextField(
-                              controller: controller.email,
-                              labelText: TextConst.usernameLabel,
-                              hintText: TextConst.usernameHint,
+                              controller: controller.username,
+                              labelText: MyStrings.username,
+                              hintText: MyStrings.username,
                               prefixIcon: Icons.person,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return TextConst.requiredValidationText;
-                                } else if (!GetUtils.isEmail(value)) {
-                                  return TextConst.emailValidationText;
+                                  return MyStrings.usernameEmptyMsg;
                                 }
                                 return null;
                               },
@@ -65,8 +63,8 @@ class AuthView extends GetView<AuthController> {
                             ),
                             CommonTextField(
                               controller: controller.password,
-                              labelText: TextConst.passwordLabel,
-                              hintText: TextConst.passHint,
+                              labelText: MyStrings.password,
+                              hintText: MyStrings.password,
                               prefixIcon: Icons.lock,
                               suffixIcon: controller.showPassword.value
                                   ? Icons.visibility
@@ -77,9 +75,7 @@ class AuthView extends GetView<AuthController> {
                               obscureText: controller.showPassword.value,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return TextConst.requiredValidationText;
-                                } else if (value.length < 8) {
-                                  return TextConst.passwordValidationText;
+                                  return MyStrings.requiredMsg;
                                 }
                                 return null;
                               },
@@ -91,25 +87,32 @@ class AuthView extends GetView<AuthController> {
                               width:
                                   controller.isLoading.value ? 50 : Get.width,
                               duration: const Duration(milliseconds: 500),
-                              child: CommonButton(
-                                onPressed: () {
-                                  if (controller.formKey.currentState!
-                                      .validate()) {
-                                    controller.formKey.currentState!.save();
-                                    // controller.login();
-                                  }
-                                },
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 15,
-                                  horizontal: 15,
-                                ),
-                                child: const Text(
-                                  TextConst.loginText,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
+                              child: Obx(
+                                () => controller.isLoading.isTrue
+                                    ? Center(
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    : CommonButton(
+                                        onPressed: () {
+                                          if (controller.formKey.currentState!
+                                              .validate()) {
+                                            controller.formKey.currentState!
+                                                .save();
+                                            controller.login();
+                                          }
+                                        },
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 15,
+                                          horizontal: 15,
+                                        ),
+                                        child: const Text(
+                                          MyStrings.login,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
                               ),
                             ),
                           ],
