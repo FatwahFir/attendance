@@ -101,6 +101,7 @@ class AttendanceController extends GetxController {
     try {
       var res = await _provider.checkAttendanceStatus(user!.id!);
       if (res.statusCode == HttpStatus.ok) {
+        await Box.setMaxRadius(res.body['max_radius'] as int);
         if (res.body['status'] == 'not-checked-in') {
           Box.setAttendanceStatus('open');
         } else if (res.body['status'] == 'checked-out') {

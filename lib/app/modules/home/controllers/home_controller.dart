@@ -52,7 +52,8 @@ class HomeController extends GetxController {
         users.value = data['user_count'];
         locations.value = data['location_count'];
         attendances.value = data['attendance_count'];
-        radius.text = data['max_radius'].toString();
+        radius.text =
+            data['max_radius'] != null ? data['max_radius'].toString() : '0';
         graphicData.addAll(
           MyUtils.fromJsonList<GraphicData>(
               data['recap'], GraphicData.fromJson),

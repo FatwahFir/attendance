@@ -1,6 +1,7 @@
 import 'package:attendance/app/modules/auth/controllers/auth_controller.dart';
 import 'package:attendance/app/shared/components/custom_dialog.dart';
 import 'package:attendance/app/theme/default_theme.dart';
+import 'package:attendance/app/utils/box.dart';
 import 'package:attendance/app/utils/consts/my_strings.dart';
 import 'package:attendance/app/utils/date_formatter.dart';
 import 'package:avatar_glow/avatar_glow.dart';
@@ -205,7 +206,14 @@ class AttendanceView extends GetView<AttendanceController> {
                                     ),
                                   ).marginOnly(top: 40),
                                   onTap: () {
-                                    if (controller.distanceM <= 50.0 &&
+                                    double maxRadius = Box.maxRadius != null
+                                        ? Box.maxRadius is int
+                                            ? Box.maxRadius!.toDouble()
+                                            : double.parse(
+                                                Box.maxRadius.toString())
+                                        : 50.0;
+
+                                    if (controller.distanceM <= maxRadius &&
                                         controller.attendanceStatus.value !=
                                             'out') {
                                       controller.submitAttendance();
@@ -225,7 +233,9 @@ class AttendanceView extends GetView<AttendanceController> {
                                             SizedBox(
                                               height: 10,
                                             ),
-                                            Text(MyStrings.locationWarningMsg),
+                                            Text(
+                                              "You are outside the allowed radius for attendance. The allowed radius is $maxRadius meters.",
+                                            ),
                                           ],
                                         ),
                                         title: MyStrings.locationWarningTitle,

@@ -12,6 +12,7 @@ class Box {
 
   static User? get user => User.fromJson(_loginState.read('user'));
   static String? get attendanceStatus => _loginState.read('status');
+  static int? get maxRadius => _loginState.read('maxRadius');
 
   // static String get role => loginState.read('role');
 
@@ -25,5 +26,9 @@ class Box {
 
   static Future<void> setAttendanceStatus(String data) async {
     await _loginState.write('status', data);
+  }
+
+  static Future<void> setMaxRadius(int data) async {
+    await _loginState.write('maxRadius', data);
   }
 }
