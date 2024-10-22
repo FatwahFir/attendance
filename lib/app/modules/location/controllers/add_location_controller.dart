@@ -1,12 +1,13 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:attendance/app/data/providers/location_provider.dart';
 import 'package:attendance/app/shared/components/common_button.dart';
 import 'package:attendance/app/shared/components/common_text_field.dart';
+import 'package:attendance/app/shared/components/custom_snackbar.dart';
 import 'package:attendance/app/theme/default_theme.dart';
 import 'package:attendance/app/utils/consts/text_const.dart';
+import 'package:attendance/app/utils/my_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -44,7 +45,7 @@ class AddLocationController extends GetxController {
             onTap: showDialog),
       );
     } catch (e) {
-      log(e.toString());
+      MyUtils.exceptionHandler(e);
     }
   }
 
@@ -89,7 +90,7 @@ class AddLocationController extends GetxController {
       });
       isLoading.toggle();
     } catch (e) {
-      log(e.toString());
+      MyUtils.exceptionHandler(e);
     }
   }
 
@@ -104,11 +105,11 @@ class AddLocationController extends GetxController {
       var res = await _provider.addLocation(data);
       if (res.statusCode == HttpStatus.ok) {
         markers.clear();
-        log('Okkkkk');
         Get.back();
+        CustomSnackBar.success(successList: [res.body['message']]);
       }
     } catch (e) {
-      log(e.toString());
+      MyUtils.exceptionHandler(e);
     }
   }
 

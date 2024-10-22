@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:attendance/app/data/models/location_model.dart';
 import 'package:attendance/app/data/providers/location_provider.dart';
+import 'package:attendance/app/utils/my_utils.dart';
 import 'package:get/get.dart';
 
 class LocationController extends GetxController
@@ -24,7 +24,7 @@ class LocationController extends GetxController
       _locations.addAll(await _provider.getLocations());
       change(_locations, status: RxStatus.success());
     } catch (e) {
-      log(e.toString());
+      MyUtils.exceptionHandler(e);
       change(_locations, status: RxStatus.error());
     }
   }
