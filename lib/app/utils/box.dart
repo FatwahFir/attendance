@@ -11,6 +11,7 @@ class Box {
   static GetStorage get loginState => _loginState;
 
   static User? get user => User.fromJson(_loginState.read('user'));
+  static String? get attendanceStatus => _loginState.read('status');
 
   // static String get role => loginState.read('role');
 
@@ -20,5 +21,9 @@ class Box {
 
   static Future<void> setLoginData(Map<String, dynamic> data) async {
     await _loginState.write('user', data);
+  }
+
+  static Future<void> setAttendanceStatus(String data) async {
+    await _loginState.write('status', data);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:attendance/app/modules/auth/controllers/auth_controller.dart';
 import 'package:attendance/app/theme/default_theme.dart';
+import 'package:attendance/app/utils/consts/my_strings.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 
@@ -153,23 +154,37 @@ class AttendanceView extends GetView<AttendanceController> {
                     ),
                   ],
                 ),
-                AvatarGlow(
-                  glowColor: DefaultTheme.green80,
-                  glowRadiusFactor: 0.3,
-                  child: Material(
-                    // Replace this child with your own
-                    elevation: 8.0,
-                    shape: CircleBorder(),
-                    child: CircleAvatar(
-                      backgroundColor: DefaultTheme.green100,
-                      radius: 50.0,
-                      child: Text(
-                        "IN",
-                        style: TextStyle(color: Colors.white),
+                Obx(() {
+                  var status = controller.attendanceStatus.value;
+                  return AvatarGlow(
+                    glowColor: status == "open"
+                        ? DefaultTheme.green80
+                        : status == 'in'
+                            ? DefaultTheme.red80
+                            : DefaultTheme.dark20.withOpacity(0.5),
+                    glowRadiusFactor: 0.1,
+                    child: Material(
+                      elevation: 8.0,
+                      shape: CircleBorder(),
+                      child: CircleAvatar(
+                        backgroundColor: status == "open"
+                            ? DefaultTheme.green80
+                            : status == 'in'
+                                ? DefaultTheme.red80
+                                : DefaultTheme.dark20.withOpacity(0.5),
+                        radius: 50.0,
+                        child: Text(
+                          status == "open"
+                              ? MyStrings.checkIn
+                              : status == 'in'
+                                  ? MyStrings.checkOut
+                                  : MyStrings.checkIn,
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ),
-                  ),
-                ).marginOnly(top: 40),
+                  ).marginOnly(top: 40);
+                }),
               ],
             ),
           ),

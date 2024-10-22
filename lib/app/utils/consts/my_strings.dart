@@ -7,6 +7,9 @@ class MyStrings {
   static const String reason = 'Reason';
   static const String expiredDate = 'Expired Date';
 
+  static const String checkIn = 'Check In';
+  static const String checkOut = 'Check Out';
+
   static const String isRequired = 'is required';
   static const String unableToAccessYourLocation =
       'Unable to access your location. Please make sure your internet connection is strong and location services are enabled.';
