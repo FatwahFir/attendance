@@ -18,6 +18,7 @@ dependencies:
   iconsax: ^0.0.8
   connectivity_plus: 6.1.0
   get_storage: 2.1.1
+  syncfusion_flutter_charts: 27.1.55
   flutter: 
     sdk: flutter
 
@@ -27,7 +28,7 @@ dev_dependencies:
     sdk: flutter
 
 flutter: 
-  assets:
+  assets: 
     - assets/
     - assets/images/
   uses-material-design: true

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:attendance/app/data/models/graphic_data.dart';
 import 'package:attendance/app/data/providers/home_provider.dart';
 import 'package:attendance/app/shared/components/custom_snackbar.dart';
 import 'package:attendance/app/utils/my_utils.dart';
@@ -14,6 +15,7 @@ class HomeController extends GetxController {
   RxInt users = 0.obs;
   RxInt locations = 0.obs;
   RxInt attendances = 0.obs;
+  RxList<GraphicData> graphicData = <GraphicData>[].obs;
 
   @override
   void onInit() async {
@@ -45,11 +47,16 @@ class HomeController extends GetxController {
       isLoading(true);
       var res = await _provider.getInfo();
       if (res.statusCode == HttpStatus.ok) {
+        graphicData.clear();
         var data = res.body['data'];
         users.value = data['user_count'];
         locations.value = data['location_count'];
         attendances.value = data['attendance_count'];
         radius.text = data['max_radius'].toString();
+        graphicData.addAll(
+          MyUtils.fromJsonList<GraphicData>(
+              data['recap'], GraphicData.fromJson),
+        );
       }
     } catch (e) {
       MyUtils.exceptionHandler(e);
