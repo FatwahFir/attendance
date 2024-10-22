@@ -29,8 +29,7 @@ class HomeView extends GetView<HomeController> {
             elevation: 5,
             shadowColor: Colors.grey[200],
             icon: CircleAvatar(
-              backgroundColor: Colors.amber,
-              child: Center(child: Image.asset('assets/images/avatar.png')),
+              backgroundImage: AssetImage('assets/images/avatar.jpg'),
             ),
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
               PopupMenuItem<String>(
