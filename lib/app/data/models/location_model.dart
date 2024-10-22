@@ -6,6 +6,7 @@ class Location {
   String? createdAt;
   String? updatedAt;
   String? name;
+  int? maxRadius;
 
   Location(
       {this.id,
@@ -24,6 +25,7 @@ class Location {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     name = json['name'];
+    maxRadius = json['max_radius'] as int;
   }
 
   Map<String, dynamic> toJson() {
@@ -35,6 +37,7 @@ class Location {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     data['name'] = name;
+    data['max_radius'] = maxRadius;
     return data;
   }
 }

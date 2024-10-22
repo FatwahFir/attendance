@@ -12,7 +12,8 @@ class Box {
 
   static User? get user => User.fromJson(_loginState.read('user'));
   static String? get attendanceStatus => _loginState.read('status');
-  static int? get maxRadius => _loginState.read('maxRadius');
+  // static int? get maxRadius => _loginState.read('maxRadius');
+  static int? get maxRadius => user?.userDetails?.location?.maxRadius;
 
   // static String get role => loginState.read('role');
 

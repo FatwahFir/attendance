@@ -1,8 +1,6 @@
 import 'package:attendance/app/data/models/graphic_data.dart';
 import 'package:attendance/app/modules/auth/controllers/auth_controller.dart';
 import 'package:attendance/app/modules/home/widgets/home_card.dart';
-import 'package:attendance/app/shared/components/common_button.dart';
-import 'package:attendance/app/shared/components/common_text_field.dart';
 import 'package:attendance/app/theme/default_theme.dart';
 import 'package:attendance/app/utils/box.dart';
 import 'package:attendance/app/utils/consts/my_strings.dart';
@@ -96,63 +94,63 @@ class HomeView extends GetView<HomeController> {
                         SizedBox(
                           height: 5,
                         ),
-                        Card(
-                          elevation: 7,
-                          shadowColor: Colors.grey[200],
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: Row(
-                              children: [
-                                Form(
-                                  key: controller.formKey,
-                                  child: Expanded(
-                                    child: SizedBox(
-                                      height: 40,
-                                      child: CommonTextField(
-                                        controller: controller.radius,
-                                        contentPadding: EdgeInsets.symmetric(
-                                            horizontal: 10, vertical: 5),
-                                        labelText: MyStrings.maxRadius,
-                                        keyboardType: TextInputType.number,
-                                        validator: (val) {
-                                          if (val?.isEmpty) {
-                                            return MyStrings.requiredMsg;
-                                          } else {
-                                            return null;
-                                          }
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                SizedBox(
-                                  height: 40,
-                                  width: Get.width * 0.2,
-                                  child: CommonButton(
-                                    child: Text(MyStrings.save),
-                                    onPressed: () {
-                                      if (controller.formKey.currentState!
-                                          .validate()) {
-                                        controller.formKey.currentState!.save();
-                                        controller.updateMaxRadius();
-                                      }
-                                    },
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
+                        // Card(
+                        //   elevation: 7,
+                        //   shadowColor: Colors.grey[200],
+                        //   child: Container(
+                        //     padding: const EdgeInsets.all(10),
+                        //     decoration: BoxDecoration(
+                        //       color: Colors.white,
+                        //       borderRadius: BorderRadius.circular(5),
+                        //     ),
+                        //     child: Row(
+                        //       children: [
+                        //         Form(
+                        //           key: controller.formKey,
+                        //           child: Expanded(
+                        //             child: SizedBox(
+                        //               height: 40,
+                        //               child: CommonTextField(
+                        //                 controller: controller.radius,
+                        //                 contentPadding: EdgeInsets.symmetric(
+                        //                     horizontal: 10, vertical: 5),
+                        //                 labelText: MyStrings.maxRadius,
+                        //                 keyboardType: TextInputType.number,
+                        //                 validator: (val) {
+                        //                   if (val?.isEmpty) {
+                        //                     return MyStrings.requiredMsg;
+                        //                   } else {
+                        //                     return null;
+                        //                   }
+                        //                 },
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //         SizedBox(
+                        //           width: 5,
+                        //         ),
+                        //         SizedBox(
+                        //           height: 40,
+                        //           width: Get.width * 0.2,
+                        //           child: CommonButton(
+                        //             child: Text(MyStrings.save),
+                        //             onPressed: () {
+                        //               if (controller.formKey.currentState!
+                        //                   .validate()) {
+                        //                 controller.formKey.currentState!.save();
+                        //                 controller.updateMaxRadius();
+                        //               }
+                        //             },
+                        //           ),
+                        //         )
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
+                        // SizedBox(
+                        //   height: 10,
+                        // ),
                         Card(
                           elevation: 7,
                           shadowColor: Colors.grey[200],

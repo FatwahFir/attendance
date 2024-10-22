@@ -6,6 +6,7 @@ import 'package:attendance/app/modules/location/controllers/location_controller.
 import 'package:attendance/app/shared/components/common_text_field.dart';
 import 'package:attendance/app/shared/components/custom_dialog.dart';
 import 'package:attendance/app/shared/components/custom_snackbar.dart';
+import 'package:attendance/app/utils/box.dart';
 import 'package:attendance/app/utils/consts/my_strings.dart';
 import 'package:attendance/app/utils/my_utils.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class AddLocationController extends GetxController {
   final Location _location = Location();
   final formKey = GlobalKey<FormState>();
   final nameC = TextEditingController();
+  final maxRadiusC = TextEditingController();
   Rx<LatLng> position = LatLng(0.0, 0.0).obs;
   LatLng? taggedPosition;
   final Completer<GoogleMapController> mapController =
@@ -83,10 +85,11 @@ class AddLocationController extends GetxController {
   Future<void> createLocation() async {
     try {
       var data = {
-        'admin_id': 1,
+        'admin_id': Box.user!.id,
         'lat': taggedPosition?.latitude,
         'long': taggedPosition?.longitude,
-        'name': nameC.text
+        'name': nameC.text,
+        'max_radius': maxRadiusC.text,
       };
       var res = await _provider.addLocation(data);
       if (res.statusCode == HttpStatus.ok) {
@@ -112,6 +115,21 @@ class AddLocationController extends GetxController {
                 controller: nameC,
                 labelText: MyStrings.locationName,
                 hintText: MyStrings.locationName,
+                validator: (val) {
+                  if (val?.isEmpty) {
+                    return MyStrings.requiredMsg;
+                  } else {
+                    return null;
+                  }
+                },
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              CommonTextField(
+                controller: maxRadiusC,
+                labelText: MyStrings.maxRadius,
+                hintText: MyStrings.maxRadius,
                 validator: (val) {
                   if (val?.isEmpty) {
                     return MyStrings.requiredMsg;
