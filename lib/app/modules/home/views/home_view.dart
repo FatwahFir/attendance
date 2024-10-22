@@ -41,7 +41,7 @@ class HomeView extends GetView<HomeController> {
                     SizedBox(
                       width: 5,
                     ),
-                    Text('Log Out')
+                    Text(MyStrings.logout)
                   ],
                 ),
               ),
@@ -67,7 +67,7 @@ class HomeView extends GetView<HomeController> {
                           HomeCard(
                             icon: Iconsax.user,
                             color: DefaultTheme.blue100,
-                            text: "36",
+                            text: "${controller.users.value}",
                           ),
                           const SizedBox(
                             height: 8,
@@ -75,7 +75,7 @@ class HomeView extends GetView<HomeController> {
                           HomeCard(
                             icon: Iconsax.location,
                             color: DefaultTheme.red100,
-                            text: "36",
+                            text: "${controller.locations.value}",
                           ),
                           const SizedBox(
                             height: 8,
@@ -83,7 +83,7 @@ class HomeView extends GetView<HomeController> {
                           HomeCard(
                             icon: Iconsax.note,
                             color: DefaultTheme.green100,
-                            text: "120",
+                            text: "${controller.attendances.value}",
                           ),
                         ],
                       ),

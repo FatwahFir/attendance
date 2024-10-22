@@ -6,4 +6,7 @@ class HomeProvider extends BaseProvider {
         '/app-config',
         {'_method': 'put', 'max_radius': radius},
       );
+  Future<Response> getInfo() async => get(
+        '/home',
+      );
 }
